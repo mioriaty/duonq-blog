@@ -1,0 +1,5 @@
+fragment userQueryResponseStatus on UserQueryResponse {
+  code
+  success
+  message
+}

@@ -1,0 +1,9 @@
+fragment userQueryResponse on UserQueryResponse {
+  ...userQueryResponseStatus
+  user {
+    ...userInfo
+  }
+  error {
+    ...fieldError
+  }
+}

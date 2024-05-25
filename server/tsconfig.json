@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    // Quy định output module được sử dụng
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    // Target output cho code
+    "target": "es6",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    // Đường dẫn output cho thư mục build
+    "outDir": "dist",
+    "esModuleInterop": true,
+    /* Enable all strict type-checking options. */
+    "strict": true,
+    /* Skip type checking all .d.ts files. */
+    "skipLibCheck": true,
+    // Đường dẫn base cho các import
+    "baseUrl": ".",
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      // Đường dẫn tương đối cho các import (alias)
+      "~/*": ["src/*", "src/@types/*"]
+    }
+  },
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  },
+  // Đường dẫn include cho các file cần build
+  "include": ["src/**/*.ts"],
+  // Đường dẫn exclude cho các file không cần build
+  "exclude": ["node_modules", "dist", "src/**/*.test.ts", "src/**/*.spec.ts"]
+}

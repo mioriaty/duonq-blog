@@ -1,0 +1,7 @@
+fragment userInfo on UserEntity {
+  id
+  username
+  email
+  createdAt
+  updatedAt
+}
