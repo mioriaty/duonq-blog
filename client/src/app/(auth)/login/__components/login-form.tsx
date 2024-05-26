@@ -39,19 +39,21 @@ export default function LoginForm() {
         }
       },
       update(cache, { data }) {
-        // const meData = cache.readQuery({ query: MeDocument });
-        if (data?.login.success) {
+        if (data?.login.success && data.login.user) {
           cache.writeQuery<MeQuery>({
             query: MeDocument,
             data: {
               me: {
                 user: data.login.user,
                 code: data.login.code,
-                success: data.login.success
+                success: data.login.success,
+                message: data.login.message,
+                error: data.login.error
               }
             }
           });
         }
+
       },
       onCompleted(data) {
         if (data.login?.error) {
@@ -66,8 +68,7 @@ export default function LoginForm() {
             variant: 'destructive',
             description: data.login.error[0].message
           });
-        }
-        if (data.login.success && data.login.user) {
+        } else if (data.login.success && data.login.user) {
           toast({
             title: 'Welcome to duonqblog!',
             description: `${data.login.user.username}`,

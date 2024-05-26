@@ -7,8 +7,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export function Header() {
-  const { data, loading: meLoading } = useMeQuery();
+  const { data: meData, loading: meLoading } = useMeQuery();
   const [logout, { loading: logoutLoading }] = useLogoutMutation();
+
+  console.log({ meData });
 
   const logoutUser = async () => {
     await logout({
@@ -35,7 +37,7 @@ export function Header() {
 
   if (meLoading) {
     body = null;
-  } else if (!data?.me?.user) {
+  } else if (!meData?.me?.user) {
     body = (
       <div className="flex items-center">
         <Link

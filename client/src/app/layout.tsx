@@ -1,10 +1,11 @@
 import { Toaster } from '@/components/ui/toaster';
 import { Header } from '@/containers/header';
 import { cn } from '@/lib/utils';
-import { NextApolloProvider } from '@/providers/apollo.provider';
+import { ApolloWrapper } from '@/providers/apollo-provider';
 import { ThemeProvider } from '@/providers/theme.provider';
 import type { Metadata } from 'next';
 import { Inter as FontSans } from 'next/font/google';
+import { CookiesProvider } from 'next-client-cookies/server';
 import '../styles/globals.css';
 
 const fontSans = FontSans({
@@ -29,13 +30,15 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head />
       <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
-        <NextApolloProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <Header />
-            {children}
-            <Toaster />
-          </ThemeProvider>
-        </NextApolloProvider>
+        <CookiesProvider>
+          <ApolloWrapper>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <Header />
+              {children}
+              <Toaster />
+            </ThemeProvider>
+          </ApolloWrapper>
+        </CookiesProvider>
       </body>
     </html>
   );
