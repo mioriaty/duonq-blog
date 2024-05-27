@@ -3,10 +3,10 @@ import { StatusCodes } from 'http-status-codes';
 import { Context } from '~/@types/context';
 import { LoginInput } from '~/graphql/input-types/login-input';
 import { UserMutationResponse } from '~/graphql/response-types/user-mutation-response';
-import { userModel } from '~/modules/user/user.model';
+import { userModel } from '~/modules/user/user.repository';
 
 const login = async ({ password, usernameOrEmail, req }: LoginInput & Context): Promise<UserMutationResponse> => {
-  const existingUser = await userModel.login({ usernameOrEmail });
+  const existingUser = await userModel.userExists({ usernameOrEmail });
 
   if (!existingUser) {
     return {
