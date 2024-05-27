@@ -10,8 +10,6 @@ export function Header() {
   const { data: meData, loading: meLoading } = useMeQuery();
   const [logout, { loading: logoutLoading }] = useLogoutMutation();
 
-  console.log({ meData });
-
   const logoutUser = async () => {
     await logout({
       update(cache, { data }) {

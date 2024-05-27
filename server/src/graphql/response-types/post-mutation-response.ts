@@ -1,7 +1,7 @@
 import { Field, ObjectType } from 'type-graphql';
-import { PostEntity } from '~/entities/post.entity';
 import { MutationResponseEntity } from '~/graphql/abstract-types/mutation-response';
 import { FieldError } from '~/graphql/response-types/field-error';
+import { PostEntity } from '~/modules/post/post.entity';
 
 @ObjectType({ implements: MutationResponseEntity })
 export class PostMutationResponse implements MutationResponseEntity {

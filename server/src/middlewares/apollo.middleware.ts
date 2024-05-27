@@ -4,8 +4,8 @@ import { Application } from 'express';
 import http from 'http';
 import { buildSchema } from 'type-graphql';
 import { Context } from '~/@types/context';
-import { PostController } from '~/controllers/post.controller';
-import { UserController } from '~/controllers/user.controller';
+import { PostController } from '~/modules/post/post.controller';
+import { UserController } from '~/modules/user/user.controller';
 
 export const connectApolloServer = async ({ app, httpServer }: { httpServer: http.Server; app: Application }) => {
   const context = ({ req, res }: Context) => ({

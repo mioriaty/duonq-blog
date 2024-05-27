@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 import { DataSource } from 'typeorm';
 import { env } from '~/configs/env';
-import { PostEntity } from '~/entities/post.entity';
-import { UserEntity } from '~/entities/user.entity';
+import { PostEntity } from '~/modules/post/post.entity';
+import { UserEntity } from '~/modules/user/user.entity';
 import { __PROD__ } from '~/utils/constants';
 
 const postgresDB = new DataSource({

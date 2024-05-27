@@ -1,6 +1,6 @@
 import { Secret, sign } from 'jsonwebtoken';
 import { env } from '~/configs/env';
-import { UserEntity } from '~/entities/user.entity';
+import { UserEntity } from '~/modules/user/user.entity';
 
 export const createToken = (user: UserEntity) => {
   return sign(

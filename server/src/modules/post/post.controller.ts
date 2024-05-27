@@ -1,10 +1,10 @@
 import { StatusCodes } from 'http-status-codes';
 import { Arg, ID, Mutation, Query, Resolver, UseMiddleware } from 'type-graphql';
-import { PostEntity } from '~/entities/post.entity';
 import { CreatePostInput } from '~/graphql/input-types/create-post-input';
 import { UpdatePostInput } from '~/graphql/input-types/update-post-input';
 import { PostMutationResponse } from '~/graphql/response-types/post-mutation-response';
 import { checkGraphQLAuthMiddleware } from '~/middlewares/graphql-auth.middleware';
+import { PostEntity } from '~/modules/post/post.entity';
 
 @Resolver()
 export class PostController {

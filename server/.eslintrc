@@ -32,5 +32,6 @@
     "comma-spacing": 1,
     "arrow-spacing": 1,
     "semi": ["warn", "always"]
-  }
+  },
+  "ignorePatterns": ["node_modules/", "dist/"]
 }

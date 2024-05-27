@@ -2,11 +2,12 @@ import argon2 from 'argon2';
 import { StatusCodes } from 'http-status-codes';
 import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import { Context } from '~/@types/context';
-import { UserEntity } from '~/entities/user.entity';
 import { LoginInput } from '~/graphql/input-types/login-input';
 import { RegisterInput } from '~/graphql/input-types/register-input';
 import { UserMutationResponse } from '~/graphql/response-types/user-mutation-response';
 import { UserQueryResponse } from '~/graphql/response-types/user-query-response';
+import { UserEntity } from '~/modules/user/user.entity';
+import { userService } from '~/modules/user/user.service';
 import { COOKIE_NAME } from '~/utils/constants';
 import { registerValidation } from '~/validations/register-validation';
 
@@ -40,7 +41,13 @@ export class UserController {
       return {
         code: StatusCodes.INTERNAL_SERVER_ERROR,
         success: false,
-        message: 'An error occurred'
+        message: 'An error occurred',
+        error: [
+          {
+            field: 'server',
+            message: (error as Error).message
+          }
+        ]
       };
     }
   }
@@ -101,52 +108,10 @@ export class UserController {
   @Mutation(() => UserMutationResponse)
   async login(
     @Arg('loginInput') { password, usernameOrEmail }: LoginInput,
-    @Ctx() { req }: Context
+    @Ctx() { req, res }: Context
   ): Promise<UserMutationResponse> {
     try {
-      const existingUser = await UserEntity.findOne({
-        where: usernameOrEmail.includes('@') ? { email: usernameOrEmail } : { username: usernameOrEmail }
-      });
-
-      if (!existingUser) {
-        return {
-          code: StatusCodes.BAD_REQUEST,
-          success: false,
-          message: 'User not found',
-          error: [
-            {
-              field: 'usernameOrEmail',
-              message: 'User not found'
-            }
-          ]
-        };
-      }
-
-      const isPasswordValid = await argon2.verify(existingUser.password, password);
-
-      if (!isPasswordValid) {
-        return {
-          code: StatusCodes.BAD_REQUEST,
-          success: false,
-          message: 'Password does not match the user',
-          error: [
-            {
-              field: 'password',
-              message: 'Password does not match the user'
-            }
-          ]
-        };
-      }
-
-      // set userId in request session
-      req.session.userId = existingUser.id;
-
-      return {
-        code: StatusCodes.OK,
-        success: true,
-        message: 'Login success',
-        user: existingUser
-      };
+      return userService.login({ password, usernameOrEmail, req, res });
     } catch (error) {
       return {
         code: StatusCodes.INTERNAL_SERVER_ERROR,

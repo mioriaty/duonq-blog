@@ -21,7 +21,7 @@
     }
   },
   "engines": {
-    "node": "18.20.1"
+    "node": "20.10.0"
   },
   "dependencies": {
     "@typegoose/typegoose": "^12.4.0",

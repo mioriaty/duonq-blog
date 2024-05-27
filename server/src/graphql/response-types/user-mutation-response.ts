@@ -1,7 +1,7 @@
 import { Field, ObjectType } from 'type-graphql';
-import { UserEntity } from '~/entities/user.entity';
 import { MutationResponseEntity } from '~/graphql/abstract-types/mutation-response';
 import { FieldError } from '~/graphql/response-types/field-error';
+import { UserEntity } from '~/modules/user/user.entity';
 
 @ObjectType({ implements: MutationResponseEntity })
 export class UserMutationResponse implements MutationResponseEntity {
