@@ -1,6 +1,6 @@
 import { Toaster } from '@/components/ui/toaster';
 import { Header } from '@/containers/header';
-import { cn } from '@/lib/utils';
+import { cn } from '@/libs/utils';
 import { ApolloWrapper } from '@/providers/apollo-provider';
 import { ThemeProvider } from '@/providers/theme.provider';
 import type { Metadata } from 'next';

@@ -10,12 +10,12 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string };
-  String: { input: string; output: string };
-  Boolean: { input: boolean; output: boolean };
-  Int: { input: number; output: number };
-  Float: { input: number; output: number };
-  DateTime: { input: any; output: any };
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  DateTime: { input: any; output: any; }
 };
 
 export type CreatePostInput = {
@@ -44,21 +44,26 @@ export type Mutation = {
   updatePost: PostMutationResponse;
 };
 
+
 export type MutationCreatePostArgs = {
   createPostInput: CreatePostInput;
 };
+
 
 export type MutationDeletePostArgs = {
   id: Scalars['ID']['input'];
 };
 
+
 export type MutationLoginArgs = {
   loginInput: LoginInput;
 };
 
+
 export type MutationRegisterArgs = {
   registerInput: RegisterInput;
 };
+
 
 export type MutationUpdatePostArgs = {
   updatePostInput: UpdatePostInput;
@@ -94,6 +99,7 @@ export type Query = {
   post: PostMutationResponse;
   posts: Array<PostEntity>;
 };
+
 
 export type QueryPostArgs = {
   id: Scalars['ID']['input'];
@@ -140,216 +146,109 @@ export type UserQueryResponse = MutationResponseEntity & {
   user?: Maybe<UserEntity>;
 };
 
-export type FieldErrorFragment = { __typename?: 'FieldError'; field: string; message: string };
+export type FieldErrorFragment = { __typename?: 'FieldError', field: string, message: string };
 
-export type UserQueryResponseStatusFragment = {
-  __typename?: 'UserQueryResponse';
-  code: number;
-  success: boolean;
-  message?: string | null;
-};
+export type UserQueryResponseStatusFragment = { __typename?: 'UserQueryResponse', code: number, success: boolean, message?: string | null };
 
-export type UserInfoFragment = {
-  __typename?: 'UserEntity';
-  id: string;
-  username: string;
-  email: string;
-  createdAt: any;
-  updatedAt: any;
-};
+export type UserInfoFragment = { __typename?: 'UserEntity', id: string, username: string, email: string, createdAt: any, updatedAt: any };
 
-export type UserMutationResponseStatusFragment = {
-  __typename?: 'UserMutationResponse';
-  code: number;
-  success: boolean;
-  message?: string | null;
-};
+export type UserMutationResponseStatusFragment = { __typename?: 'UserMutationResponse', code: number, success: boolean, message?: string | null };
 
-export type UserMutationResponseFragment = {
-  __typename?: 'UserMutationResponse';
-  code: number;
-  success: boolean;
-  message?: string | null;
-  user?: {
-    __typename?: 'UserEntity';
-    id: string;
-    username: string;
-    email: string;
-    createdAt: any;
-    updatedAt: any;
-  } | null;
-  error?: Array<{ __typename?: 'FieldError'; field: string; message: string }> | null;
-};
+export type UserMutationResponseFragment = { __typename?: 'UserMutationResponse', code: number, success: boolean, message?: string | null, user?: { __typename?: 'UserEntity', id: string, username: string, email: string, createdAt: any, updatedAt: any } | null, error?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null };
 
-export type UserQueryResponseFragment = {
-  __typename?: 'UserQueryResponse';
-  code: number;
-  success: boolean;
-  message?: string | null;
-  user?: {
-    __typename?: 'UserEntity';
-    id: string;
-    username: string;
-    email: string;
-    createdAt: any;
-    updatedAt: any;
-  } | null;
-  error?: Array<{ __typename?: 'FieldError'; field: string; message: string }> | null;
-};
+export type UserQueryResponseFragment = { __typename?: 'UserQueryResponse', code: number, success: boolean, message?: string | null, user?: { __typename?: 'UserEntity', id: string, username: string, email: string, createdAt: any, updatedAt: any } | null, error?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null };
 
 export type LoginMutationVariables = Exact<{
   loginInput: LoginInput;
 }>;
 
-export type LoginMutation = {
-  __typename?: 'Mutation';
-  login: {
-    __typename?: 'UserMutationResponse';
-    code: number;
-    success: boolean;
-    message?: string | null;
-    user?: {
-      __typename?: 'UserEntity';
-      id: string;
-      username: string;
-      email: string;
-      createdAt: any;
-      updatedAt: any;
-    } | null;
-    error?: Array<{ __typename?: 'FieldError'; field: string; message: string }> | null;
-  };
-};
 
-export type LogoutMutationVariables = Exact<{ [key: string]: never }>;
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserMutationResponse', code: number, success: boolean, message?: string | null, user?: { __typename?: 'UserEntity', id: string, username: string, email: string, createdAt: any, updatedAt: any } | null, error?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null } };
 
-export type LogoutMutation = {
-  __typename?: 'Mutation';
-  logout: {
-    __typename?: 'UserMutationResponse';
-    code: number;
-    success: boolean;
-    message?: string | null;
-    user?: {
-      __typename?: 'UserEntity';
-      id: string;
-      username: string;
-      email: string;
-      createdAt: any;
-      updatedAt: any;
-    } | null;
-    error?: Array<{ __typename?: 'FieldError'; field: string; message: string }> | null;
-  };
-};
+export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LogoutMutation = { __typename?: 'Mutation', logout: { __typename?: 'UserMutationResponse', code: number, success: boolean, message?: string | null, user?: { __typename?: 'UserEntity', id: string, username: string, email: string, createdAt: any, updatedAt: any } | null, error?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null } };
 
 export type RegisterMutationVariables = Exact<{
   registerInput: RegisterInput;
 }>;
 
-export type RegisterMutation = {
-  __typename?: 'Mutation';
-  register: {
-    __typename?: 'UserMutationResponse';
-    code: number;
-    success: boolean;
-    message?: string | null;
-    user?: {
-      __typename?: 'UserEntity';
-      id: string;
-      username: string;
-      email: string;
-      createdAt: any;
-      updatedAt: any;
-    } | null;
-    error?: Array<{ __typename?: 'FieldError'; field: string; message: string }> | null;
-  };
-};
 
-export type MeQueryVariables = Exact<{ [key: string]: never }>;
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserMutationResponse', code: number, success: boolean, message?: string | null, user?: { __typename?: 'UserEntity', id: string, username: string, email: string, createdAt: any, updatedAt: any } | null, error?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null } };
 
-export type MeQuery = {
-  __typename?: 'Query';
-  me: {
-    __typename?: 'UserQueryResponse';
-    code: number;
-    success: boolean;
-    message?: string | null;
-    user?: {
-      __typename?: 'UserEntity';
-      id: string;
-      username: string;
-      email: string;
-      createdAt: any;
-      updatedAt: any;
-    } | null;
-    error?: Array<{ __typename?: 'FieldError'; field: string; message: string }> | null;
-  };
-};
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeQuery = { __typename?: 'Query', me: { __typename?: 'UserQueryResponse', code: number, success: boolean, message?: string | null, user?: { __typename?: 'UserEntity', id: string, username: string, email: string, createdAt: any, updatedAt: any } | null, error?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null } };
+
+export type GetPostsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'PostEntity', id: string, title: string, content: string, createdAt: any, updatedAt: any }> };
 
 export const UserMutationResponseStatusFragmentDoc = gql`
-  fragment userMutationResponseStatus on UserMutationResponse {
-    code
-    success
-    message
-  }
-`;
+    fragment userMutationResponseStatus on UserMutationResponse {
+  code
+  success
+  message
+}
+    `;
 export const UserInfoFragmentDoc = gql`
-  fragment userInfo on UserEntity {
-    id
-    username
-    email
-    createdAt
-    updatedAt
-  }
-`;
+    fragment userInfo on UserEntity {
+  id
+  username
+  email
+  createdAt
+  updatedAt
+}
+    `;
 export const FieldErrorFragmentDoc = gql`
-  fragment fieldError on FieldError {
-    field
-    message
-  }
-`;
+    fragment fieldError on FieldError {
+  field
+  message
+}
+    `;
 export const UserMutationResponseFragmentDoc = gql`
-  fragment userMutationResponse on UserMutationResponse {
-    ...userMutationResponseStatus
-    user {
-      ...userInfo
-    }
-    error {
-      ...fieldError
-    }
+    fragment userMutationResponse on UserMutationResponse {
+  ...userMutationResponseStatus
+  user {
+    ...userInfo
   }
-  ${UserMutationResponseStatusFragmentDoc}
-  ${UserInfoFragmentDoc}
-  ${FieldErrorFragmentDoc}
-`;
+  error {
+    ...fieldError
+  }
+}
+    ${UserMutationResponseStatusFragmentDoc}
+${UserInfoFragmentDoc}
+${FieldErrorFragmentDoc}`;
 export const UserQueryResponseStatusFragmentDoc = gql`
-  fragment userQueryResponseStatus on UserQueryResponse {
-    code
-    success
-    message
-  }
-`;
+    fragment userQueryResponseStatus on UserQueryResponse {
+  code
+  success
+  message
+}
+    `;
 export const UserQueryResponseFragmentDoc = gql`
-  fragment userQueryResponse on UserQueryResponse {
-    ...userQueryResponseStatus
-    user {
-      ...userInfo
-    }
-    error {
-      ...fieldError
-    }
+    fragment userQueryResponse on UserQueryResponse {
+  ...userQueryResponseStatus
+  user {
+    ...userInfo
   }
-  ${UserQueryResponseStatusFragmentDoc}
-  ${UserInfoFragmentDoc}
-  ${FieldErrorFragmentDoc}
-`;
+  error {
+    ...fieldError
+  }
+}
+    ${UserQueryResponseStatusFragmentDoc}
+${UserInfoFragmentDoc}
+${FieldErrorFragmentDoc}`;
 export const LoginDocument = gql`
-  mutation Login($loginInput: LoginInput!) {
-    login(loginInput: $loginInput) {
-      ...userMutationResponse
-    }
+    mutation Login($loginInput: LoginInput!) {
+  login(loginInput: $loginInput) {
+    ...userMutationResponse
   }
-  ${UserMutationResponseFragmentDoc}
-`;
+}
+    ${UserMutationResponseFragmentDoc}`;
 export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
 
 /**
@@ -370,20 +269,19 @@ export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutati
  * });
  */
 export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
-}
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
+      }
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const LogoutDocument = gql`
-  mutation Logout {
-    logout {
-      ...userMutationResponse
-    }
+    mutation Logout {
+  logout {
+    ...userMutationResponse
   }
-  ${UserMutationResponseFragmentDoc}
-`;
+}
+    ${UserMutationResponseFragmentDoc}`;
 export type LogoutMutationFn = Apollo.MutationFunction<LogoutMutation, LogoutMutationVariables>;
 
 /**
@@ -403,20 +301,19 @@ export type LogoutMutationFn = Apollo.MutationFunction<LogoutMutation, LogoutMut
  * });
  */
 export function useLogoutMutation(baseOptions?: Apollo.MutationHookOptions<LogoutMutation, LogoutMutationVariables>) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument, options);
-}
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument, options);
+      }
 export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
 export type LogoutMutationResult = Apollo.MutationResult<LogoutMutation>;
 export type LogoutMutationOptions = Apollo.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
 export const RegisterDocument = gql`
-  mutation Register($registerInput: RegisterInput!) {
-    register(registerInput: $registerInput) {
-      ...userMutationResponse
-    }
+    mutation Register($registerInput: RegisterInput!) {
+  register(registerInput: $registerInput) {
+    ...userMutationResponse
   }
-  ${UserMutationResponseFragmentDoc}
-`;
+}
+    ${UserMutationResponseFragmentDoc}`;
 export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, RegisterMutationVariables>;
 
 /**
@@ -436,23 +333,20 @@ export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, Regis
  *   },
  * });
  */
-export function useRegisterMutation(
-  baseOptions?: Apollo.MutationHookOptions<RegisterMutation, RegisterMutationVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument, options);
-}
+export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<RegisterMutation, RegisterMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument, options);
+      }
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
 export const MeDocument = gql`
-  query Me {
-    me {
-      ...userQueryResponse
-    }
+    query Me {
+  me {
+    ...userQueryResponse
   }
-  ${UserQueryResponseFragmentDoc}
-`;
+}
+    ${UserQueryResponseFragmentDoc}`;
 
 /**
  * __useMeQuery__
@@ -470,18 +364,61 @@ export const MeDocument = gql`
  * });
  */
 export function useMeQuery(baseOptions?: Apollo.QueryHookOptions<MeQuery, MeQueryVariables>) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<MeQuery, MeQueryVariables>(MeDocument, options);
-}
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+      }
 export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery, MeQueryVariables>) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, options);
-}
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+        }
 export function useMeSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<MeQuery, MeQueryVariables>) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useSuspenseQuery<MeQuery, MeQueryVariables>(MeDocument, options);
-}
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+        }
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeSuspenseQueryHookResult = ReturnType<typeof useMeSuspenseQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const GetPostsDocument = gql`
+    query GetPosts {
+  posts {
+    id
+    title
+    content
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useGetPostsQuery__
+ *
+ * To run a query within a React component, call `useGetPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPostsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPostsQuery(baseOptions?: Apollo.QueryHookOptions<GetPostsQuery, GetPostsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, options);
+      }
+export function useGetPostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPostsQuery, GetPostsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, options);
+        }
+export function useGetPostsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetPostsQuery, GetPostsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, options);
+        }
+export type GetPostsQueryHookResult = ReturnType<typeof useGetPostsQuery>;
+export type GetPostsLazyQueryHookResult = ReturnType<typeof useGetPostsLazyQuery>;
+export type GetPostsSuspenseQueryHookResult = ReturnType<typeof useGetPostsSuspenseQuery>;
+export type GetPostsQueryResult = Apollo.QueryResult<GetPostsQuery, GetPostsQueryVariables>;

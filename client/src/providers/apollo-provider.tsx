@@ -1,6 +1,6 @@
 'use client';
 
-import { GRAPHQL_ENDPOINT } from '@/lib/constants/env';
+import { GRAPHQL_ENDPOINT } from '@/libs/constants/env';
 import { ApolloLink, HttpLink } from '@apollo/client';
 import {
   ApolloNextAppProvider,

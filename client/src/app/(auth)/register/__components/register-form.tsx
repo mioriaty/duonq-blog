@@ -1,16 +1,16 @@
 'use client';
 
-import { ButtonLoading } from '@/components/shared/ButtonLoading';
-import { PasswordInput } from '@/components/shared/PasswordInput';
-import { LoadingSpinner } from '@/components/shared/Spinner';
+import { ButtonLoading } from '@/shared/ButtonLoading';
+import { PasswordInput } from '@/shared/PasswordInput';
+import { LoadingSpinner } from '@/shared/Spinner';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
 import { MeDocument, MeQuery, useRegisterMutation } from '@/generated/graphql';
-import { mapFieldErrors } from '@/lib/helpers/map-field-errors';
-import { useCheckAuth } from '@/lib/hooks/useCheckAuth';
-import { RegisterFormSchema } from '@/lib/types/schemas/register.schema';
+import { mapFieldErrors } from '@/libs/helpers/map-field-errors';
+import { useCheckAuth } from '@/libs/hooks/useCheckAuth';
+import { RegisterFormSchema } from '@/libs/types/schemas/register.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';

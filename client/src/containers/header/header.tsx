@@ -1,6 +1,6 @@
 'use client';
 
-import { ButtonLoading } from '@/components/shared/ButtonLoading';
+import { ButtonLoading } from '@/shared/ButtonLoading';
 import { MeDocument, MeQuery, useLogoutMutation, useMeQuery } from '@/generated/graphql';
 import { SlashIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
