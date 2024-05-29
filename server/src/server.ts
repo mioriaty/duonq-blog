@@ -4,15 +4,16 @@ import cors from 'cors';
 import express, { Application } from 'express';
 import { createServer } from 'http';
 import 'reflect-metadata';
-import { env } from '~/configs/env';
 import { connectSessionMongo } from '~/configs/databases/mongo.db';
 import { connectPostgresDB } from '~/configs/databases/postgres.db';
+import { env } from '~/configs/env';
 import { connectApolloServer } from '~/middlewares/apollo.middleware';
 import { errorHandlingMiddleware } from '~/middlewares/error.middleware';
 import { sessionMiddleware } from '~/middlewares/session.middleware';
 import { __PROD__ } from '~/utils/constants';
 
 const START_SERVER = async () => {
+  // await sendEmail('mioriaty@gmail.com', '<h1>Hello mio</h1>');
   const app = express() as Application;
   const httpServer = createServer(app);
 
