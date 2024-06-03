@@ -68,6 +68,9 @@ dependencies:
   typeorm:
     specifier: ^0.3.20
     version: 0.3.20(mongodb@6.5.0)(pg@8.11.5)(ts-node@10.9.2)
+  uuid:
+    specifier: ^9.0.1
+    version: 9.0.1
 
 devDependencies:
   '@types/async-exit-hook':
@@ -91,6 +94,9 @@ devDependencies:
   '@types/nodemailer':
     specifier: ^6.4.15
     version: 6.4.15
+  '@types/uuid':
+    specifier: ^9.0.8
+    version: 9.0.8
   '@typescript-eslint/eslint-plugin':
     specifier: ^7.5.0
     version: 7.6.0(@typescript-eslint/parser@7.6.0)(eslint@8.57.0)(typescript@5.4.5)
@@ -707,6 +713,10 @@ packages:
       '@types/http-errors': 2.0.4
       '@types/node': 18.19.31
       '@types/send': 0.17.4
+
+  /@types/uuid@9.0.8:
+    resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
+    dev: true
 
   /@types/validator@13.11.9:
     resolution: {integrity: sha512-FCTsikRozryfayPuiI46QzH3fnrOoctTjvOYZkho9BTFLCOZ2rgZJHMOVgCOfttjPJcgOx52EpkY0CMfy87MIw==}

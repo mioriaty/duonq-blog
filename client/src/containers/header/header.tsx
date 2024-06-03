@@ -5,6 +5,7 @@ import { MeDocument, MeQuery, useLogoutMutation, useMeQuery } from '@/generated/
 import { SlashIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ThemeSwitcher } from '@/components/theme-switcher';
 
 export function Header() {
   const { data: meData, loading: meLoading } = useMeQuery();
@@ -74,6 +75,7 @@ export function Header() {
           >
             Blogs
           </Link>
+          <ThemeSwitcher />
           {body}
         </div>
       </header>

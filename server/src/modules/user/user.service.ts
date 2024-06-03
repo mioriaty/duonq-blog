@@ -1,12 +1,54 @@
 import argon2 from 'argon2';
 import { StatusCodes } from 'http-status-codes';
 import { Context } from '~/@types/context';
+import { ForgotPasswordInput } from '~/graphql/input-types/forgot-password-input';
 import { LoginInput } from '~/graphql/input-types/login-input';
 import { RegisterInput } from '~/graphql/input-types/register-input';
 import { UserMutationResponse } from '~/graphql/response-types/user-mutation-response';
-import { userModel } from '~/modules/user/user.repository';
+import { TokenModel } from '~/modules/token/token.model';
+import { userRepository } from '~/modules/user/user.repository';
 import { COOKIE_NAME } from '~/utils/constants';
+import { sendEmail } from '~/utils/sendEmail';
 import { registerValidation } from '~/validations/register-validation';
+import { v4 as uuidv4 } from 'uuid';
+
+const me = async ({ req }: Context): Promise<UserMutationResponse> => {
+  try {
+    if (!req.session.userId) {
+      return {
+        code: StatusCodes.UNAUTHORIZED,
+        success: false,
+        message: 'Cookie is expired or not set'
+      };
+    }
+    const user = await userRepository.userExists({ id: req.session.userId });
+    if (!user) {
+      return {
+        code: StatusCodes.NOT_FOUND,
+        success: false,
+        message: 'User not found'
+      };
+    }
+    return {
+      code: StatusCodes.OK,
+      success: true,
+      message: 'User found',
+      user
+    };
+  } catch (error) {
+    return {
+      code: StatusCodes.INTERNAL_SERVER_ERROR,
+      success: false,
+      message: 'An error occurred',
+      error: [
+        {
+          field: 'server',
+          message: (error as Error).message
+        }
+      ]
+    };
+  }
+};
 
 const register = async ({ email, password, username, req }: RegisterInput & Context): Promise<UserMutationResponse> => {
   try {
@@ -20,7 +62,7 @@ const register = async ({ email, password, username, req }: RegisterInput & Cont
       };
     }
 
-    const existingUser = await userModel.userExists({ email, username });
+    const existingUser = await userRepository.userExists({ email, username });
 
     if (existingUser) {
       return {
@@ -36,7 +78,7 @@ const register = async ({ email, password, username, req }: RegisterInput & Cont
       };
     }
     const hashedPassword = await argon2.hash(password);
-    const newUser = await userModel.createUser({
+    const newUser = await userRepository.createUser({
       email,
       password: hashedPassword,
       username
@@ -61,7 +103,7 @@ const register = async ({ email, password, username, req }: RegisterInput & Cont
 
 const login = async ({ password, usernameOrEmail, req }: LoginInput & Context): Promise<UserMutationResponse> => {
   try {
-    const existingUser = await userModel.userExists(
+    const existingUser = await userRepository.userExists(
       usernameOrEmail.includes('@') ? { email: usernameOrEmail } : { username: usernameOrEmail }
     );
 
@@ -134,16 +176,9 @@ const logout = ({ req, res }: Context): Promise<UserMutationResponse> => {
   );
 };
 
-const me = async ({ req }: Context): Promise<UserMutationResponse> => {
+const forgotPassword = async ({ email }: ForgotPasswordInput): Promise<UserMutationResponse> => {
   try {
-    if (!req.session.userId) {
-      return {
-        code: StatusCodes.UNAUTHORIZED,
-        success: false,
-        message: 'Cookie is expired or not set'
-      };
-    }
-    const user = await userModel.userExists({ id: req.session.userId });
+    const user = await userRepository.userExists({ email });
     if (!user) {
       return {
         code: StatusCodes.NOT_FOUND,
@@ -151,25 +186,34 @@ const me = async ({ req }: Context): Promise<UserMutationResponse> => {
         message: 'User not found'
       };
     }
+
+    // delete existing token
+    await TokenModel.findOneAndDelete({ userId: user.id.toString() });
+
+    // save token to DB
+    const resetToken = uuidv4();
+    const hashedToken = await argon2.hash(resetToken);
+
+    await new TokenModel({ userId: user.id.toString(), token: hashedToken }).save();
+
+    // send reset password email
+    await sendEmail(
+      user.email,
+      `<a href="http://localhost:3000/change-password?token=${resetToken}&userId=${user.id}">Reset password</a>`
+    );
+
     return {
       code: StatusCodes.OK,
       success: true,
-      message: 'User found',
-      user
+      message: 'Email sent'
     };
   } catch (error) {
     return {
       code: StatusCodes.INTERNAL_SERVER_ERROR,
       success: false,
-      message: 'An error occurred',
-      error: [
-        {
-          field: 'server',
-          message: (error as Error).message
-        }
-      ]
+      message: 'An error occurred'
     };
   }
 };
 
-export const userService = { login, logout, register, me };
+export const userService = { login, logout, register, me, forgotPassword };

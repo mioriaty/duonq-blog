@@ -29,6 +29,10 @@ export type FieldError = {
   message: Scalars['String']['output'];
 };
 
+export type ForgotPasswordInput = {
+  email: Scalars['String']['input'];
+};
+
 export type LoginInput = {
   password: Scalars['String']['input'];
   usernameOrEmail: Scalars['String']['input'];
@@ -38,6 +42,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createPost: PostMutationResponse;
   deletePost: PostMutationResponse;
+  forgotPassword: UserMutationResponse;
   login: UserMutationResponse;
   logout: UserMutationResponse;
   register: UserMutationResponse;
@@ -52,6 +57,11 @@ export type MutationCreatePostArgs = {
 
 export type MutationDeletePostArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type MutationForgotPasswordArgs = {
+  forgotPasswordInput: ForgotPasswordInput;
 };
 
 
@@ -158,6 +168,13 @@ export type UserMutationResponseFragment = { __typename?: 'UserMutationResponse'
 
 export type UserQueryResponseFragment = { __typename?: 'UserQueryResponse', code: number, success: boolean, message?: string | null, user?: { __typename?: 'UserEntity', id: string, username: string, email: string, createdAt: any, updatedAt: any } | null, error?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null };
 
+export type ForgetPasswordMutationVariables = Exact<{
+  forgotPasswordInput: ForgotPasswordInput;
+}>;
+
+
+export type ForgetPasswordMutation = { __typename?: 'Mutation', forgotPassword: { __typename?: 'UserMutationResponse', code: number, success: boolean, message?: string | null } };
+
 export type LoginMutationVariables = Exact<{
   loginInput: LoginInput;
 }>;
@@ -242,6 +259,41 @@ export const UserQueryResponseFragmentDoc = gql`
     ${UserQueryResponseStatusFragmentDoc}
 ${UserInfoFragmentDoc}
 ${FieldErrorFragmentDoc}`;
+export const ForgetPasswordDocument = gql`
+    mutation ForgetPassword($forgotPasswordInput: ForgotPasswordInput!) {
+  forgotPassword(forgotPasswordInput: $forgotPasswordInput) {
+    code
+    success
+    message
+  }
+}
+    `;
+export type ForgetPasswordMutationFn = Apollo.MutationFunction<ForgetPasswordMutation, ForgetPasswordMutationVariables>;
+
+/**
+ * __useForgetPasswordMutation__
+ *
+ * To run a mutation, you first call `useForgetPasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useForgetPasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [forgetPasswordMutation, { data, loading, error }] = useForgetPasswordMutation({
+ *   variables: {
+ *      forgotPasswordInput: // value for 'forgotPasswordInput'
+ *   },
+ * });
+ */
+export function useForgetPasswordMutation(baseOptions?: Apollo.MutationHookOptions<ForgetPasswordMutation, ForgetPasswordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ForgetPasswordMutation, ForgetPasswordMutationVariables>(ForgetPasswordDocument, options);
+      }
+export type ForgetPasswordMutationHookResult = ReturnType<typeof useForgetPasswordMutation>;
+export type ForgetPasswordMutationResult = Apollo.MutationResult<ForgetPasswordMutation>;
+export type ForgetPasswordMutationOptions = Apollo.BaseMutationOptions<ForgetPasswordMutation, ForgetPasswordMutationVariables>;
 export const LoginDocument = gql`
     mutation Login($loginInput: LoginInput!) {
   login(loginInput: $loginInput) {

@@ -9,13 +9,7 @@
     "lint": "next lint",
     "format": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write --ignore-path .gitignore .",
-    "codegen": "graphql-codegen --config codegen.yml",
-    "prepare": "husky install"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "codegen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
     "@apollo/client": "^3.10.2",
@@ -67,7 +61,6 @@
     "postcss": "^8",
     "prettier-plugin-tailwindcss": "^0.5.14",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5",
-    "husky": "^9.0.11"
+    "typescript": "^5"
   }
 }

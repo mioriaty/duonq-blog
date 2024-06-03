@@ -18,4 +18,4 @@ const createUser = async ({ username, email, password }: { username: string; ema
   return newUser;
 };
 
-export const userModel = { userExists, createUser };
+export const userRepository = { userExists, createUser };
