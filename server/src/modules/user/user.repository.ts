@@ -18,4 +18,18 @@ const createUser = async ({ username, email, password }: { username: string; ema
   return newUser;
 };
 
-export const userRepository = { userExists, createUser };
+const updateUser = async ({
+  id,
+  username,
+  email,
+  password
+}: {
+  id: number;
+  username?: string;
+  email?: string;
+  password?: string;
+}) => {
+  return await UserEntity.update({ id }, { username, email, password });
+};
+
+export const userRepository = { userExists, createUser, updateUser };

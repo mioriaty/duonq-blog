@@ -216,4 +216,87 @@ const forgotPassword = async ({ email }: ForgotPasswordInput): Promise<UserMutat
   }
 };
 
-export const userService = { login, logout, register, me, forgotPassword };
+const changePassword = async ({
+  newPassword,
+  token,
+  userId
+}: {
+  token: string;
+  userId: string;
+  newPassword: string;
+}): Promise<UserMutationResponse> => {
+  if (newPassword.length <= 6) {
+    return {
+      code: StatusCodes.BAD_REQUEST,
+      success: false,
+      message: 'Password length must be greater than 6',
+      error: [
+        {
+          field: 'newPassword',
+          message: 'Password length must be greater than 6'
+        }
+      ]
+    };
+  }
+
+  try {
+    const resetPasswordRecord = await TokenModel.findOne({ userId });
+
+    if (!resetPasswordRecord) {
+      return {
+        code: StatusCodes.NOT_FOUND,
+        success: false,
+        message: 'Invalid or expired token'
+      };
+    }
+    const resetPasswordValid = await argon2.verify(resetPasswordRecord.token, token);
+
+    if (!resetPasswordValid) {
+      return {
+        code: StatusCodes.UNAUTHORIZED,
+        success: false,
+        message: 'Invalid or expired token'
+      };
+    }
+
+    const userIdInt = parseInt(userId);
+
+    const user = await userRepository.userExists({ id: userIdInt });
+
+    if (!user) {
+      return {
+        code: StatusCodes.NOT_FOUND,
+        success: false,
+        message: 'User no longer exists'
+      };
+    }
+
+    const updatedPassword = await argon2.hash(newPassword);
+
+    await userRepository.updateUser({ id: userIdInt, password: updatedPassword });
+
+    // delete token after password changed successfully
+    await TokenModel.deleteOne({ userId });
+
+    return {
+      code: StatusCodes.OK,
+      success: true,
+      message: 'Password changed successfully'
+    };
+  } catch (error) {
+    return {
+      code: StatusCodes.INTERNAL_SERVER_ERROR,
+      success: false,
+      message: 'An error occurred'
+    };
+  }
+};
+
+export const userService = {
+  login,
+  logout,
+  register,
+  me,
+  forgotPassword,
+  changePassword
+};

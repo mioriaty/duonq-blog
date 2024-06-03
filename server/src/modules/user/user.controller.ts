@@ -89,62 +89,8 @@ export class UserController {
     @Arg('userId') userId: string,
     @Arg('changePasswordInput') changePasswordInput: ChangePasswordInput
   ): Promise<UserMutationResponse> {
-    if (changePasswordInput.newPassword.length <= 6) {
-      return {
-        code: StatusCodes.BAD_REQUEST,
-        success: false,
-        message: 'Password length must be greater than 6',
-        error: [
-          {
-            field: 'newPassword',
-            message: 'Password length must be greater than 6'
-          }
-        ]
-      };
-    }
     try {
-      const resetPasswordRecord = await TokenModel.findOne({ userId });
-
-      if (!resetPasswordRecord) {
-        return {
-          code: StatusCodes.NOT_FOUND,
-          success: false,
-          message: 'Invalid or expired token'
-        };
-      }
-      const resetPasswordValid = await argon2.verify(resetPasswordRecord.token, token);
-
-      if (!resetPasswordValid) {
-        return {
-          code: StatusCodes.UNAUTHORIZED,
-          success: false,
-          message: 'Invalid or expired token'
-        };
-      }
-
-      const userIdInt = parseInt(userId);
-
-      const user = await UserEntity.findOne({ where: { id: userIdInt } });
-
-      if (!user) {
-        return {
-          code: StatusCodes.NOT_FOUND,
-          success: false,
-          message: 'User no longer exists'
-        };
-      }
-
-      const updatedPassword = await argon2.hash(changePasswordInput.newPassword);
-
-      await UserEntity.update({ id: userIdInt }, { password: updatedPassword });
-
-      await TokenModel.deleteOne({ userId });
-
-      return {
-        code: StatusCodes.OK,
-        success: true,
-        message: 'Password changed successfully'
-      };
+      return userService.changePassword({ token, userId, newPassword: changePasswordInput.newPassword });
     } catch (error) {
       return {
         code: StatusCodes.INTERNAL_SERVER_ERROR,
