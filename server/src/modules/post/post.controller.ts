@@ -3,7 +3,7 @@ import { Arg, ID, Mutation, Query, Resolver, UseMiddleware } from 'type-graphql'
 import { CreatePostInput } from '~/graphql/input-types/create-post-input';
 import { UpdatePostInput } from '~/graphql/input-types/update-post-input';
 import { PostMutationResponse } from '~/graphql/response-types/post-mutation-response';
-import { checkGraphQLAuthMiddleware } from '~/middlewares/graphql-auth.middleware';
+import { checkSessionAuth } from '~/middlewares/session-auth.middleware';
 import { PostEntity } from '~/modules/post/post.entity';
 
 @Resolver()
@@ -44,7 +44,7 @@ export class PostController {
   }
 
   @Mutation(() => PostMutationResponse)
-  @UseMiddleware(checkGraphQLAuthMiddleware)
+  @UseMiddleware(checkSessionAuth)
   async createPost(@Arg('createPostInput') { title, content }: CreatePostInput): Promise<PostMutationResponse> {
     try {
       const newPost = PostEntity.create({ content, title });
@@ -67,7 +67,7 @@ export class PostController {
   }
 
   @Mutation(() => PostMutationResponse)
-  @UseMiddleware(checkGraphQLAuthMiddleware)
+  @UseMiddleware(checkSessionAuth)
   async updatePost(@Arg('updatePostInput') { content, id, title }: UpdatePostInput): Promise<PostMutationResponse> {
     try {
       const existingPost = await PostEntity.findOne({ where: { id } });
@@ -100,7 +100,7 @@ export class PostController {
   }
 
   @Mutation(() => PostMutationResponse)
-  @UseMiddleware(checkGraphQLAuthMiddleware)
+  @UseMiddleware(checkSessionAuth)
   async deletePost(@Arg('id', () => ID) id: number): Promise<PostMutationResponse> {
     try {
       const post = await PostEntity.findOne({ where: { id } });

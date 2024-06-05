@@ -10,7 +10,14 @@ export const useCheckAuth = () => {
   const { data, loading } = useMeQuery();
 
   useEffect(() => {
-    if (!loading && !!data?.me.user && (pathname === '/login' || pathname === '/register')) {
+    if (
+      !loading &&
+      !!data?.me.user &&
+      (pathname === '/login' ||
+        pathname === '/register' ||
+        pathname === '/forgot-password' ||
+        pathname === '/change-password')
+    ) {
       router.replace('/');
     }
   }, [data, loading, pathname, router]);

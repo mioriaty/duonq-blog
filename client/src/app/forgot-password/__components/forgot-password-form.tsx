@@ -5,14 +5,16 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
 import { useForgetPasswordMutation } from '@/generated/graphql';
+import { useCheckAuth } from '@/libs/hooks/useCheckAuth';
 import { ForgotFormSchema } from '@/libs/types/schemas/forgot-password.schema';
 import { ButtonLoading } from '@/shared/ButtonLoading';
+import { LoadingSpinner } from '@/shared/Spinner';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
 export const ForgotPasswordForm: React.FC = () => {
+  const { loading: authLoading } = useCheckAuth();
   const form = useForm<z.infer<typeof ForgotFormSchema>>({
     resolver: zodResolver(ForgotFormSchema),
     defaultValues: {
@@ -21,7 +23,6 @@ export const ForgotPasswordForm: React.FC = () => {
   });
 
   const [forgotPassword, { loading }] = useForgetPasswordMutation();
-  const navigate = useRouter();
 
   const handleForgotPassword = (data: z.infer<typeof ForgotFormSchema>) => {
     forgotPassword({
@@ -32,25 +33,6 @@ export const ForgotPasswordForm: React.FC = () => {
       },
       onCompleted(data) {
         console.log({ data });
-
-        // if (data.login?.error) {
-        //   const { field, message } = mapFieldErrors(data.login.error);
-        //   form.setError(field as keyof z.infer<typeof ForgotFormSchema>, {
-        //     message
-        //   });
-        //   toast({
-        //     title: 'duonqblog notification',
-        //     variant: 'destructive',
-        //     description: data.login.error[0].message
-        //   });
-        // } else if (data.login.success && data.login.user) {
-        //   toast({
-        //     title: 'Welcome to duonqblog!',
-        //     description: `${data.login.user.username}`,
-        //     duration: 3000
-        //   });
-        //   navigate.push('/');
-        // }
       },
       onError(error) {
         form.setError('email' as keyof z.infer<typeof ForgotFormSchema>, {
@@ -64,6 +46,15 @@ export const ForgotPasswordForm: React.FC = () => {
       }
     });
   };
+
+  if (authLoading) {
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
 
   return (
     <Card>

@@ -15,6 +15,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
+import Link from 'next/link';
 
 export default function LoginForm() {
   const { loading: authLoading } = useCheckAuth();
@@ -53,7 +54,6 @@ export default function LoginForm() {
             }
           });
         }
-
       },
       onCompleted(data) {
         if (data.login?.error) {
@@ -135,6 +135,10 @@ export default function LoginForm() {
             <ButtonLoading type="submit" isLoading={form.formState.isLoading || loading} className="w-full">
               Sign up
             </ButtonLoading>
+
+            <Link href={'/forgot-password'} className="underline inline-block">
+              Forgot password
+            </Link>
           </form>
         </Form>
       </CardContent>

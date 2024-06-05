@@ -7,10 +7,7 @@ import { LoginInput } from '~/graphql/input-types/login-input';
 import { RegisterInput } from '~/graphql/input-types/register-input';
 import { UserMutationResponse } from '~/graphql/response-types/user-mutation-response';
 import { UserQueryResponse } from '~/graphql/response-types/user-query-response';
-import { TokenModel } from '~/modules/token/token.model';
 import { userService } from '~/modules/user/user.service';
-import argon2 from 'argon2';
-import { UserEntity } from '~/modules/user/user.entity';
 
 @Resolver()
 export class UserController {
@@ -87,10 +84,11 @@ export class UserController {
   async changePassword(
     @Arg('token') token: string,
     @Arg('userId') userId: string,
-    @Arg('changePasswordInput') changePasswordInput: ChangePasswordInput
+    @Arg('changePasswordInput') changePasswordInput: ChangePasswordInput,
+    @Ctx() context: Context
   ): Promise<UserMutationResponse> {
     try {
-      return userService.changePassword({ token, userId, newPassword: changePasswordInput.newPassword });
+      return userService.changePassword({ token, userId, newPassword: changePasswordInput.newPassword, context });
     } catch (error) {
       return {
         code: StatusCodes.INTERNAL_SERVER_ERROR,

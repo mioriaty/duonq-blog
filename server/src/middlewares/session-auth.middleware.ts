@@ -3,7 +3,7 @@ import { MiddlewareFn } from 'type-graphql';
 import { Context } from '~/@types/context';
 
 // for graphql resolvers
-export const checkGraphQLAuthMiddleware: MiddlewareFn<Context> = ({ context }, next) => {
+export const checkSessionAuth: MiddlewareFn<Context> = ({ context }, next) => {
   if (!context.req.session.userId) {
     throw new AuthenticationError('Not authenticated');
   }

@@ -219,11 +219,13 @@ const forgotPassword = async ({ email }: ForgotPasswordInput): Promise<UserMutat
 const changePassword = async ({
   newPassword,
   token,
-  userId
+  userId,
+  context
 }: {
   token: string;
   userId: string;
   newPassword: string;
+  context: Context;
 }): Promise<UserMutationResponse> => {
   if (newPassword.length <= 6) {
     return {
@@ -246,7 +248,13 @@ const changePassword = async ({
       return {
         code: StatusCodes.NOT_FOUND,
         success: false,
-        message: 'Invalid or expired token'
+        message: 'Invalid or expired token',
+        error: [
+          {
+            field: 'token',
+            message: 'Invalid or expired token'
+          }
+        ]
       };
     }
     const resetPasswordValid = await argon2.verify(resetPasswordRecord.token, token);
@@ -255,7 +263,13 @@ const changePassword = async ({
       return {
         code: StatusCodes.UNAUTHORIZED,
         success: false,
-        message: 'Invalid or expired token'
+        message: 'Invalid or expired token',
+        error: [
+          {
+            field: 'token',
+            message: 'Invalid or expired token'
+          }
+        ]
       };
     }
 
@@ -267,7 +281,13 @@ const changePassword = async ({
       return {
         code: StatusCodes.NOT_FOUND,
         success: false,
-        message: 'User no longer exists'
+        message: 'User no longer exists',
+        error: [
+          {
+            field: 'userId',
+            message: 'User no longer exists'
+          }
+        ]
       };
     }
 
@@ -278,10 +298,13 @@ const changePassword = async ({
     // delete token after password changed successfully
     await TokenModel.deleteOne({ userId });
 
+    context.req.session.userId = user.id;
+
     return {
       code: StatusCodes.OK,
       success: true,
-      message: 'Password changed successfully'
+      message: 'Password changed successfully',
+      user
     };
   } catch (error) {
     return {
