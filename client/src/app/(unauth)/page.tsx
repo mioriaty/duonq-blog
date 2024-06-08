@@ -1,8 +1,8 @@
 import { Posts } from '@/containers/posts/posts';
 
-export default async function HomePage() {
+export default function Page() {
   return (
-    <div className="container">
+    <div>
       <Posts />
     </div>
   );

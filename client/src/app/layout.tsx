@@ -1,5 +1,4 @@
 import { Toaster } from '@/components/ui/toaster';
-import { Header } from '@/containers/header';
 import { cn } from '@/libs/utils';
 import { ApolloWrapper } from '@/providers/apollo-provider';
 import { ThemeProvider } from '@/providers/theme.provider';
@@ -33,7 +32,6 @@ export default function RootLayout({
         <CookiesProvider>
           <ApolloWrapper>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <Header />
               {children}
               <Toaster />
             </ThemeProvider>

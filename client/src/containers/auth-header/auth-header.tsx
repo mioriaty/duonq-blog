@@ -7,7 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 
-export function Header() {
+export function AuthHeader() {
   const { data: meData, loading: meLoading } = useMeQuery();
   const [logout, { loading: logoutLoading }] = useLogoutMutation();
 
