@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/prettierrc",
   "arrowParens": "always",
   "semi": true,
   "trailingComma": "none",
@@ -7,5 +8,9 @@
   "useTabs": false,
   "singleQuote": true,
   "printWidth": 120,
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "plugins": ["prettier-plugin-tailwindcss", "@trivago/prettier-plugin-sort-imports"],
+  "importOrder": ["<THIRD_PARTY_MODULES>", "^@/lib/(.*)$", "^@/components/(.*)$", "^@/app/(.*)$", "^./(.*)$"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "proseWrap": "always"
 }

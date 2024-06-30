@@ -1,7 +1,8 @@
-import { LoadingSpinner } from '@/shared/Spinner';
+import Link from 'next/link';
+
 import { GetPostsDocument, GetPostsQuery } from '@/generated/graphql';
 import { getClient } from '@/libs/helpers/apollo-client';
-import Link from 'next/link';
+import { LoadingSpinner } from '@/shared/Spinner';
 
 export const Posts = async () => {
   const client = getClient();

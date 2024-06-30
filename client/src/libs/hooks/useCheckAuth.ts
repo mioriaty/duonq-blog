@@ -1,8 +1,9 @@
 'use client';
 
-import { useMeQuery } from '@/generated/graphql';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+
+import { useMeQuery } from '@/generated/graphql';
 
 export const useCheckAuth = () => {
   const router = useRouter();

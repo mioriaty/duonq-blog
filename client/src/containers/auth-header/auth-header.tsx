@@ -1,11 +1,13 @@
 'use client';
 
-import { ButtonLoading } from '@/shared/ButtonLoading';
-import { MeDocument, MeQuery, useLogoutMutation, useMeQuery } from '@/generated/graphql';
 import { SlashIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 import Link from 'next/link';
+
 import { ThemeSwitcher } from '@/components/theme-switcher';
+
+import { MeDocument, MeQuery, useLogoutMutation, useMeQuery } from '@/generated/graphql';
+import { ButtonLoading } from '@/shared/ButtonLoading';
 
 export function AuthHeader() {
   const { data: meData, loading: meLoading } = useMeQuery();

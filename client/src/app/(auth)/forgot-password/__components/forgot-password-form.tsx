@@ -1,17 +1,19 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
+
 import { useForgetPasswordMutation } from '@/generated/graphql';
 import { useCheckAuth } from '@/libs/hooks/useCheckAuth';
 import { ForgotFormSchema } from '@/libs/types/schemas/forgot-password.schema';
 import { ButtonLoading } from '@/shared/ButtonLoading';
 import { LoadingSpinner } from '@/shared/Spinner';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
 
 export const ForgotPasswordForm: React.FC = () => {
   const { loading: authLoading } = useCheckAuth();
@@ -54,7 +56,6 @@ export const ForgotPasswordForm: React.FC = () => {
       </div>
     );
   }
-
 
   return (
     <Card>

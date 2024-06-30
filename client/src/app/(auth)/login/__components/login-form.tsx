@@ -1,21 +1,23 @@
 'use client';
 
-import { ButtonLoading } from '@/shared/ButtonLoading';
-import { PasswordInput } from '@/shared/PasswordInput';
-import { LoadingSpinner } from '@/shared/Spinner';
+import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
+
 import { MeDocument, MeQuery, useLoginMutation } from '@/generated/graphql';
 import { mapFieldErrors } from '@/libs/helpers/map-field-errors';
 import { useCheckAuth } from '@/libs/hooks/useCheckAuth';
 import { LoginFormSchema } from '@/libs/types/schemas/login.schema';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
-import Link from 'next/link';
+import { ButtonLoading } from '@/shared/ButtonLoading';
+import { PasswordInput } from '@/shared/PasswordInput';
+import { LoadingSpinner } from '@/shared/Spinner';
 
 export default function LoginForm() {
   const { loading: authLoading } = useCheckAuth();

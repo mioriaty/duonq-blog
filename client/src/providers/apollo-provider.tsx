@@ -1,6 +1,5 @@
 'use client';
 
-import { GRAPHQL_ENDPOINT } from '@/libs/constants/env';
 import { ApolloLink, HttpLink } from '@apollo/client';
 import {
   ApolloNextAppProvider,
@@ -9,10 +8,12 @@ import {
   SSRMultipartLink
 } from '@apollo/experimental-nextjs-app-support/ssr';
 
+import { GRAPHQL_ENDPOINT } from '@/libs/constants/env';
+
 function makeClient() {
   const httpLink = new HttpLink({
     uri: GRAPHQL_ENDPOINT,
-    credentials: 'include',
+    credentials: 'include'
     // fetchOptions: { cache: 'no-store' },
   });
 

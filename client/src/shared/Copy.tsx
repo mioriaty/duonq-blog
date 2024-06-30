@@ -1,7 +1,8 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { FC, useState } from 'react';
+
+import { Button } from '@/components/ui/button';
 
 interface CopyProps {
   title: string;

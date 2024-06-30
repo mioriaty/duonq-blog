@@ -1,11 +1,13 @@
+import '../styles/globals.css';
+import type { Metadata } from 'next';
+import { CookiesProvider } from 'next-client-cookies/server';
+import { Inter as FontSans } from 'next/font/google';
+
 import { Toaster } from '@/components/ui/toaster';
+
 import { cn } from '@/libs/utils';
 import { ApolloWrapper } from '@/providers/apollo-provider';
 import { ThemeProvider } from '@/providers/theme.provider';
-import type { Metadata } from 'next';
-import { Inter as FontSans } from 'next/font/google';
-import { CookiesProvider } from 'next-client-cookies/server';
-import '../styles/globals.css';
 
 const fontSans = FontSans({
   subsets: ['latin'],

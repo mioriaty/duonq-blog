@@ -1,8 +1,14 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { toast } from '@/components/ui/use-toast';
+
 import { useChangePasswordMutation } from '@/generated/graphql';
 import { mapFieldErrors } from '@/libs/helpers/map-field-errors';
 import { useCheckAuth } from '@/libs/hooks/useCheckAuth';
@@ -10,10 +16,6 @@ import { ChangePasswordFormSchema } from '@/libs/types/schemas/change-password.s
 import { ButtonLoading } from '@/shared/ButtonLoading';
 import { PasswordInput } from '@/shared/PasswordInput';
 import { LoadingSpinner } from '@/shared/Spinner';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 
 export function ChangePasswordForm() {
   const { loading: authLoading } = useCheckAuth();

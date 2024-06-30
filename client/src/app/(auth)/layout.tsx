@@ -1,5 +1,6 @@
-import { AuthHeader } from '@/containers/auth-header';
 import { ReactNode } from 'react';
+
+import { AuthHeader } from '@/containers/auth-header';
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (

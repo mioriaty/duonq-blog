@@ -1,9 +1,10 @@
-"use client";
+'use client';
+
+import { useTheme } from 'next-themes';
+import { ComponentProps, FC } from 'react';
 
 import { Icons } from '@/components/icons';
 import { Button } from '@/components/ui/button';
-import { useTheme } from 'next-themes';
-import { ComponentProps, FC } from 'react';
 
 type ThemeSwitcherProps = {
   className?: ComponentProps<'button'>['className'];

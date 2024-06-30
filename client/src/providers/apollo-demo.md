@@ -4,7 +4,7 @@
 
 ### here is a server component called UserProfile and here we want to get the user data
 
-``` javascript
+```javascript
 import { gql } from "@apollo/client";
 import { getClient } from "@/lib/client";
 import { cookies } from "next/headers";
@@ -48,11 +48,11 @@ const UserProfile = async () => {
 };
 ```
 
-
 ## Query data in client components
 
 ### This is a client component, for this you need to install the next-client-cookies package or it won't work
-``` javascript
+
+```javascript
 "use client";
 import React from "react";
 import { useCookies } from "next-client-cookies";

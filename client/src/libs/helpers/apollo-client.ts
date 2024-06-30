@@ -1,6 +1,7 @@
-import { GRAPHQL_ENDPOINT } from '@/libs/constants/env';
 import { ApolloClient, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
 import { registerApolloClient } from '@apollo/experimental-nextjs-app-support/rsc';
+
+import { GRAPHQL_ENDPOINT } from '@/libs/constants/env';
 
 // get result from cache after request SSR
 export const { getClient } = registerApolloClient(() => {
