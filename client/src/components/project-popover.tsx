@@ -44,6 +44,7 @@ export const ProjectPopover: FC<ProjectPopoverProps> = ({ projects, modal }) => 
     //Move cursor
     let xMoveCursor = gsap.quickTo(cursor.current, 'left', { duration: 0.5, ease: 'power3' });
     let yMoveCursor = gsap.quickTo(cursor.current, 'top', { duration: 0.5, ease: 'power3' });
+
     //Move cursor label
     let xMoveCursorLabel = gsap.quickTo(cursorLabel.current, 'left', { duration: 0.45, ease: 'power3' });
     let yMoveCursorLabel = gsap.quickTo(cursorLabel.current, 'top', { duration: 0.45, ease: 'power3' });
@@ -83,7 +84,7 @@ export const ProjectPopover: FC<ProjectPopoverProps> = ({ projects, modal }) => 
                 key={`modal_${idx}`}
                 className="h-full w-full flex items-center justify-center"
               >
-                <Image src={`/images/${src}`} width={300} height={0} className="h-auto" alt="image" />
+                <Image src={`/images/${src}`} width={300} height={0} className="h-auto relative z-1" alt="image" />
               </div>
             );
           })}
